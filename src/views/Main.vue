@@ -16,6 +16,6 @@ export default {
 </script>
 <style scoped>
   #main{
-    padding-bottom: 55px
+    padding-bottom: 56px
   }
 </style>

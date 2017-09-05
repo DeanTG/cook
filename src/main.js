@@ -10,25 +10,24 @@ import 'mint-ui/lib/style.css'
 import 'normalize.css'
 
 
-
 //axios配置
 //配置请求拦截器
-axios.interceptors.request.use(function(config) {
+axios.interceptors.request.use((config) => {
   if (config.method === 'post') {
     config.data = qs.stringify(config.data);
   }
   return config;
-}, function(error) {
+}, (error) => {
   return Promise.reject(error);
 })
 //配置响应拦截器
-axios.interceptors.response.use(function(res) {
+axios.interceptors.response.use((res) => {
   if (res.data.statusCode != '00000') {
     alert('请求错误')
     return Promise.reject(res);
   }
   return res;
-}, function(error) {
+}, (error) => {
   return Promise.reject(error);
 })
 /*axios.defaults.baseURL = (process.env.NODE_ENV !=='production' ? config.dev.httpUrl:config.build.httpUrl);

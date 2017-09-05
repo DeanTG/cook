@@ -1,12 +1,16 @@
 <template>
   <div id="index">
-    <mt-header title="吾掌勺" fixed>
+    <mt-header title="cook" fixed>
       <mt-button slot="left">上海</mt-button>
       <router-link to="/explanation" slot="right">
         <mt-button>服务说明</mt-button>
       </router-link>
     </mt-header>
     <Swipe></Swipe>
+    <nav>
+      <router-link to="/private" class="item"></router-link>
+      <router-link to="/banquet" class="item"></router-link>
+    </nav>
   </div>
 </template>
 <script>
@@ -19,8 +23,26 @@ export default {
 }
 
 </script>
-<style scoped>
+<style lang="scss" scoped>
   .mint-header{
     background: rgba(0, 0, 0, 0.3)
+  }
+  nav{
+    display: flex;
+    width: 90%;
+    margin: 20px auto 0;
+    justify-content: space-between;
+    & .item{
+      display: inline-block;
+      width: 47%;
+      height: 275px;
+      background: url(../assets/images/sirendingzhi.png) no-repeat;
+      background-size: contain;
+      vertical-align: top;
+      &:last-child{
+        background: url(../assets/images/jiayouyanxi.png) no-repeat;
+        background-size: contain;
+      }
+    }
   }
 </style>

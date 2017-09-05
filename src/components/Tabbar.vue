@@ -42,11 +42,8 @@ export default {
 
 </script>
 <style lang="scss" scoped>
-body{
-  color: #fff
-}
 .mint-tabbar {
-  background: #141418;
+  background: $black;
   color: #fff;
   i{
     display: block;
@@ -54,7 +51,7 @@ body{
   }
   .is-selected{
     background: inherit!important;
-    color: #EF2432!important;
+    color: $red!important;
   }
 }
 

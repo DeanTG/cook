@@ -6,6 +6,8 @@ import Index from '../views/Index.vue'
 import Order from '../views/Order.vue'
 import Collect from '../views/Collect.vue'
 import Me from '../views/Me.vue'
+import Private from '../views/Private.vue'
+import Banquet from '../views/Banquet.vue'
 import Explanation from '../views/Explanation.vue'
 
 
@@ -44,6 +46,14 @@ export default new Router({
     {
       path: '/login',
       component: Login
+    },
+    {
+      path: '/private',
+      component: Private
+    },
+    {
+      path: '/banquet',
+      component: Banquet
     },
     {
       path: '/explanation',
