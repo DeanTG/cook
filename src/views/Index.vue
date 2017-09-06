@@ -2,9 +2,6 @@
   <div id="index">
     <mt-header title="cook" fixed>
       <mt-button slot="left">上海</mt-button>
-      <router-link to="/explanation" slot="right">
-        <mt-button>服务说明</mt-button>
-      </router-link>
     </mt-header>
     <Swipe></Swipe>
     <nav>
@@ -32,15 +29,15 @@ export default {
     width: 90%;
     margin: 20px auto 0;
     justify-content: space-between;
-    & .item{
+    .item{
       display: inline-block;
       width: 47%;
       height: 275px;
-      background: url(../assets/images/sirendingzhi.png) no-repeat;
+      background: url(../../static/images/sirendingzhi.png) no-repeat;
       background-size: contain;
       vertical-align: top;
       &:last-child{
-        background: url(../assets/images/jiayouyanxi.png) no-repeat;
+        background: url(../../static/images/jiayouyanxi.png) no-repeat;
         background-size: contain;
       }
     }

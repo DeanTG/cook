@@ -9,6 +9,9 @@ import MintUI from 'mint-ui'
 import 'mint-ui/lib/style.css'
 import 'normalize.css'
 
+Vue.use(MintUI)
+
+Vue.config.productionTip = false
 
 //axios配置
 //配置请求拦截器
@@ -39,12 +42,17 @@ axios.defaults.params = {
   version: '110',
   deviceType: '3',
 }
-
 Vue.prototype.$http = axios //其他页面在使用axios的时候直接  this.$http就可以了
 
-Vue.use(MintUI)
+// 路由配置
+router.beforeEach((to, from, next) => {
+  /* 路由发生变化修改页面title */
+  if (to.meta.title) {
+    document.title = to.meta.title;
+  }
+  next();
+})
 
-Vue.config.productionTip = false
 
 /* eslint-disable no-new */
 new Vue({

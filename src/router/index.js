@@ -8,7 +8,6 @@ import Collect from '../views/Collect.vue'
 import Me from '../views/Me.vue'
 import Private from '../views/Private.vue'
 import Banquet from '../views/Banquet.vue'
-import Explanation from '../views/Explanation.vue'
 
 
 Vue.use(Router)
@@ -27,37 +26,54 @@ export default new Router({
         },
         {
           path: 'index',
+          meta: {
+            title: '首页'
+          },
           component: Index
         },
         {
           path: 'order',
+          meta: {
+            title: '订单'
+          },
           component: Order
         },
         {
           path: 'collect',
+          meta: {
+            title: '收藏'
+          },
           component: Collect
         },
         {
           path: 'me',
+          meta: {
+            title: '我的'
+          },
           component: Me
         }
       ]
     },
     {
       path: '/login',
+      meta: {
+        title: '登录'
+      },
       component: Login
     },
     {
       path: '/private',
+      meta: {
+        title: '私人订制'
+      },
       component: Private
     },
     {
       path: '/banquet',
+      meta: {
+        title: '家有宴席'
+      },
       component: Banquet
-    },
-    {
-      path: '/explanation',
-      component: Explanation
     },
     {
       path: '*',

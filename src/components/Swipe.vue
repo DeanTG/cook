@@ -37,7 +37,7 @@ export default {
 <style lang="scss">
   .mint-swipe{
     height: 200px;
-    & img{
+    img{
       width: 100%;
       height: 100%;
     }
