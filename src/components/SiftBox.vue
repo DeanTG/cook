@@ -4,7 +4,7 @@
       <span>用餐时间</span>
     </div>
     <div id="search" class="item" style="">
-      <input type="text" placeholder="搜索烹饪师">
+      <input v-model="name" type="text" placeholder="搜索烹饪师">
       <mt-button icon="search" @click="search"></mt-button>
     </div>
   </div>

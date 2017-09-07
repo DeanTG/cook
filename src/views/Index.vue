@@ -2,6 +2,7 @@
   <div id="index">
     <mt-header title="cook" fixed>
       <mt-button slot="left">上海</mt-button>
+      <mt-button slot="right">关于我们</mt-button>
     </mt-header>
     <Swipe></Swipe>
     <nav>
