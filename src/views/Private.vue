@@ -2,7 +2,7 @@
   <div id="private">
     <header>
       <h6 class="info">亲爱的用户，我们的厨师都是五星级大厨。请放心选择</h6>
-      <SiftBox></SiftBox>
+      <SiftBox :time="dinnerTime" @searchChef="searchChef" @openPicker="openPicker"></SiftBox>
     </header>
     <ul class="chefList">
       <router-link to="/private" v-for="(item,index) in chefList" :key="chefList.id" tag="li">
@@ -23,6 +23,8 @@
       </router-link>
     </ul>
     <TimePick></TimePick>
+    <mt-datetime-picker v-model="pickerValue" ref="picker" type="datetime" :startDate="startDate" :startHour="startHour" :endHour="endHour" @confirm="handleTime">
+    </mt-datetime-picker>
   </div>
 </template>
 <script>
@@ -30,34 +32,51 @@ import SiftBox from '../components/SiftBox.vue'
 import TimePick from '../components/TimePick.vue'
 export default {
   name: 'Private',
-  data(){
+  data() {
     return {
       userId: '',
       chefList: [],
-      time: '',
-      name: ''
+      dinnerTime: '',
+      chefName: '',
+      pickerValue: '',
+      startDate: new Date(),
+      startHour: 10,
+      endHour: 19
     }
   },
-  mounted(){
+  computed: {
+    showDinnerTime(){
+    }
+  },
+  mounted() {
     this.fetchData();
   },
-  methods:{
-    fetchData(){
-      console.log()
-      this.$http.post('',{
+  methods: {
+    fetchData() {
+      this.$http.post('', {
         requestCode: '10104',
         type: 0,
         user_id: this.$data.userId,
-        time: this.$data.time,
-        name: this.$data.name,
+        time: this.$data.dinnerTime,
+        name: this.$data.chefName,
         'page.currentPage': 1,
         'page.showCount': 200
-      }).then((res)=>{
+      }).then((res) => {
         console.log(res)
         this.$data.chefList = res.data.objects;
-      }).catch((err)=>{
+      }).catch((err) => {
         console.log(err)
       })
+    },
+    searchChef(name) {
+      this.$data.chefName = name;
+      this.fetchData();
+    },
+    openPicker() {
+      this.$refs.picker.open();
+    },
+    handleTime(val){
+      this.$data.dinnerTime = val
     }
   },
   components: {
@@ -68,91 +87,94 @@ export default {
 
 </script>
 <style lang="scss" scoped>
-  body{
-    background: $black;
-  }
-  .info{
-    line-height: 30px;
-    padding: 0;
-    margin: 0;
-    border-radius: 0 0 4px 4px;
+body {
+  background: $black;
+}
+
+.info {
+  line-height: 30px;
+  padding: 0;
+  margin: 0;
+  border-radius: 0 0 4px 4px;
+  background: $lightBg;
+  color: #ccc;
+  font-size: 12px;
+  font-weight: normal;
+  text-align: center;
+}
+
+#private {
+  width: 90%;
+  padding-bottom: 20px;
+  margin: 0 auto;
+}
+
+.chefList {
+  overflow: hidden;
+  li {
+    padding-top: 165px;
+    margin-top: 40px;
+    border-radius: 4px;
     background: $lightBg;
-    color: #ccc;
-    font-size: 12px;
-    font-weight: normal;
-    text-align: center;
-  }
-  #private{
-    width: 90%;
-    padding-bottom: 20px;
-    margin: 0 auto;
-  }
-  .chefList{
-    overflow: hidden;
-    li{
-      padding-top: 165px;
-      margin-top: 40px;
+    position: relative;
+    &>img {
+      display: block;
+      width: 90%;
+      height: 185px;
       border-radius: 4px;
-      background: $lightBg;
+      position: absolute;
+      top: -20px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    .details {
+      display: flex;
+      width: 90%;
+      padding-bottom: 10px;
+      margin: 0 auto;
+      color: #fff;
+    }
+    .details-left {
+      width: 100px;
+      text-align: center;
+    }
+    .avatar {
+      display: inline-block;
+      width: 60px;
+      height: 60px;
+      margin: -30px 0 10px;
       position: relative;
-      &>img{
+      img {
+        width: 100%;
+        height: 100%;
+        border: $red solid 2px;
+        border-radius: 30px;
+      }
+      .busy {
         display: block;
-        width: 90%;
-        height: 185px;
-        border-radius: 4px;
+        width: 20px;
+        height: 20px;
+        background: url(../../static/images/busy.png) no-repeat;
+        background-size: contain;
         position: absolute;
-        top: -20px;
-        left: 50%;
-        transform: translateX(-50%);
+        right: 0;
+        bottom: 0;
       }
-      .details{
-        display: flex;
-        width: 90%;
-        padding-bottom: 10px;
-        margin: 0 auto;
-        color: #fff;
-      }
-      .details-left{
-        width: 100px;
-        text-align: center;
-      }
-      .avatar{
-        display: inline-block;
-        width: 60px;
-        height: 60px;
-        margin: -30px 0 10px;
-        position: relative;
-        img{
-          width: 100%;
-          height: 100%;
-          border: $red solid 2px;
-          border-radius: 30px;
-        }
-        .busy{
-          display: block;
-          width: 20px;
-          height: 20px;
-          background: url(../../static/images/busy.png) no-repeat;
-          background-size: contain;
-          position: absolute;
-          right: 0;
-          bottom: 0;
-        }
-      }
-      .details-right{
-        flex:1;
-        margin-top: 20px;
+    }
+    .details-right {
+      flex: 1;
+      margin-top: 20px;
+      overflow: hidden;
+      p {
+        line-height: 1.5;
+        white-space: nowrap;
         overflow: hidden;
-        p{
-          line-height: 1.5;
-          white-space: nowrap;
-          overflow: hidden;
-          text-overflow: ellipsis;
-        }
-        i{
-          color: $red;
-        }
+        text-overflow: ellipsis;
+      }
+      i {
+        color: $red;
       }
     }
   }
+}
 </style>
