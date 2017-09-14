@@ -13,6 +13,9 @@ Vue.use(MintUI)
 
 Vue.config.productionTip = false
 
+// 中央事件总线
+Vue.prototype.BUS = new Vue()
+
 //axios配置
 //配置请求拦截器
 axios.interceptors.request.use((config) => {
@@ -35,7 +38,7 @@ axios.interceptors.response.use((res) => {
 })
 /*axios.defaults.baseURL = (process.env.NODE_ENV !=='production' ? config.dev.httpUrl:config.build.httpUrl);
 ;*/
-axios.defaults.baseURL = 'http://tyapi.znzkj.net/wzs-api/s/api';
+axios.defaults.baseURL = 'http://api.greenyao.com/wzs-api/s/api'; //http://api.greenyao.com/wzs-api/s/api
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
 axios.defaults.params = {
   accessToken: '',
@@ -59,5 +62,7 @@ new Vue({
   el: '#app',
   router,
   template: '<App/>',
-  components: { App }
+  components: {
+    App
+  }
 })

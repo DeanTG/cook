@@ -45,21 +45,20 @@ export default {
     }
   },
   mounted() {
-    console.log(this)
     this.fetchData()
   },
   methods: {
     fetchData() {
       this.$http.post('', {
         requestCode: '10003',
-        user_id: this.$data.userId,
-        login_name: this.$data.loginName,
+        user_id: this.userId,
+        login_name: this.loginName,
         type: 0
       }).then((res) => {
         console.log(res)
-        this.$data.headImg = res.data.wzsMember.head_img_path;
-        this.$data.name = res.data.wzsMember.name;
-        this.$data.phone = res.data.wzsMember.phone;
+        this.headImg = res.data.wzsMember.head_img_path;
+        this.name = res.data.wzsMember.name;
+        this.phone = res.data.wzsMember.phone;
       })
     },
     signOut() {

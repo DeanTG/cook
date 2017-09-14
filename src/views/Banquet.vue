@@ -43,7 +43,7 @@ export default {
         'page.showCount': 100
       }).then((res)=>{
         console.log(res)
-        this.$data.companyList = res.data.objects
+        this.companyList = res.data.objects
       }).catch((err)=>{
         console.log(err)
       })

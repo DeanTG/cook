@@ -34,7 +34,7 @@ export default {
   },
   methods: {
     change(){
-      console.log(this.data.select)
+      console.log(this.select)
     }
   },
 

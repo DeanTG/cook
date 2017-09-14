@@ -2,10 +2,10 @@
   <div id="private">
     <header>
       <h6 class="info">亲爱的用户，我们的厨师都是五星级大厨。请放心选择</h6>
-      <SiftBox :time="dinnerTime" @searchChef="searchChef" @openPicker="openPicker"></SiftBox>
+      <SiftBox :time.sync="dinnerTime" :name.sync="chefName" @searchChef="searchChef"></SiftBox>
     </header>
     <ul class="chefList">
-      <router-link to="/private" v-for="(item,index) in chefList" :key="chefList.id" tag="li">
+      <router-link to="/private" v-for="(item,index) in chefList" :key="index" tag="li">
         <img :src="item.dis_img_path?item.dis_img_path : 'static/images/default_image_square.png'" alt="">
         <div class="details">
           <div class="details-left">
@@ -17,14 +17,15 @@
           </div>
           <div class="details-right">
             <p>擅长：{{item.good_at_cook?item.good_at_cook: '暂无数据'}}</p>
-            <p>好评：<i v-for="i in item.score" class="iconfont icon-star"></i></p>
+            <p>好评：
+              <i v-for="index in item.score" :key="index" class="iconfont icon-star"></i>
+            </p>
           </div>
         </div>
       </router-link>
     </ul>
     <TimePick></TimePick>
-    <mt-datetime-picker v-model="pickerValue" ref="picker" type="datetime" :startDate="startDate" :startHour="startHour" :endHour="endHour" @confirm="handleTime">
-    </mt-datetime-picker>
+    <mt-picker :slots="dateSlots" @change="onDateChange" :visible-item-count="3"></mt-picker>
   </div>
 </template>
 <script>
@@ -38,46 +39,58 @@ export default {
       chefList: [],
       dinnerTime: '',
       chefName: '',
-      pickerValue: '',
-      startDate: new Date(),
-      startHour: 10,
-      endHour: 19
-    }
-  },
-  computed: {
-    showDinnerTime(){
+      dateSlots: [
+        {
+          flex: 1,
+          values: ['2002', '2003', '2004', '2005', '2006', '2007', '2008', '2009', '2010', '2011', '2012', '2013', '2014', '2015', '2016'],
+          className: 'slot1',
+          textAlign: 'right'
+        }, {
+          divider: true,
+          content: '-',
+          className: 'slot2'
+        }, {
+          flex: 1,
+          values: ['2002', '2003', '2004', '2005', '2006', '2007', '2008', '2009', '2010', '2011', '2012', '2013', '2014', '2015', '2016'],
+          className: 'slot3',
+          textAlign: 'left'
+        }
+      ],
     }
   },
   mounted() {
-    this.fetchData();
+    this.fetchData()
+    this.BUS.$on('time', (res) => {
+      this.dinnerTime = res
+    })
   },
   methods: {
     fetchData() {
       this.$http.post('', {
         requestCode: '10104',
         type: 0,
-        user_id: this.$data.userId,
-        time: this.$data.dinnerTime,
-        name: this.$data.chefName,
+        user_id: this.userId,
+        time: this.dinnerTime,
+        name: this.chefName,
         'page.currentPage': 1,
         'page.showCount': 200
       }).then((res) => {
         console.log(res)
-        this.$data.chefList = res.data.objects;
+        this.chefList = res.data.objects;
       }).catch((err) => {
         console.log(err)
       })
     },
     searchChef(name) {
-      this.$data.chefName = name;
-      this.fetchData();
+      this.fetchData()
     },
-    openPicker() {
-      this.$refs.picker.open();
-    },
-    handleTime(val){
-      this.$data.dinnerTime = val
-    }
+    onDateChange(picker, values) {
+        if (values[0] > values[1]) {
+          picker.setSlotValue(1, values[0]);
+        }
+        this.dateStart = values[0];
+        this.dateEnd = values[1];
+      },
   },
   components: {
     SiftBox,

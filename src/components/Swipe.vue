@@ -20,12 +20,11 @@ export default {
   },
   methods:{
     fetchData(){
-      let _this=this;
       this.$http.post('',{
         requestCode: '60000',
         type: 0
       }).then((res)=>{
-        this.$data.items = res.data.objects;
+        this.items = res.data.objects;
       }).catch((err)=>{
         console.log(err)
       });

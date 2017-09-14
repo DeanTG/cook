@@ -15,22 +15,17 @@ export default {
   name: 'SiftBox',
   data() {
     return {
-      chefName: ''
+      chefName: this.name
     }
   },
-  props: ['time'],
+  props: ['time','name'],
   methods: {
     pickTime() {
-      this.$emit('openPicker')
+      this.BUS.$emit('openPicker')
     },
     search() {
-      if (this.$data.chefName) {
-        this.$emit('searchChef', this.$data.chefName)
-      } else {
-        this.$toast({
-          message: '请输入烹饪师',
-        })
-      }
+      this.$emit('update:name',this.chefName)
+      this.$emit('searchChef')
     }
   }
 }
