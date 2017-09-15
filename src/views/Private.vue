@@ -5,7 +5,7 @@
       <SiftBox :time.sync="dinnerTime" :name.sync="chefName" @searchChef="searchChef"></SiftBox>
     </header>
     <ul class="chefList">
-      <router-link to="/private" v-for="(item,index) in chefList" :key="index" tag="li">
+      <router-link to="/chefDetails" v-for="(item,index) in chefList" :key="index" tag="li">
         <img :src="item.dis_img_path?item.dis_img_path : 'static/images/default_image_square.png'" alt="">
         <div class="details">
           <div class="details-left">
@@ -25,7 +25,6 @@
       </router-link>
     </ul>
     <TimePick></TimePick>
-    <mt-picker :slots="dateSlots" @change="onDateChange" :visible-item-count="3"></mt-picker>
   </div>
 </template>
 <script>
@@ -39,33 +38,18 @@ export default {
       chefList: [],
       dinnerTime: '',
       chefName: '',
-      dateSlots: [
-        {
-          flex: 1,
-          values: ['2002', '2003', '2004', '2005', '2006', '2007', '2008', '2009', '2010', '2011', '2012', '2013', '2014', '2015', '2016'],
-          className: 'slot1',
-          textAlign: 'right'
-        }, {
-          divider: true,
-          content: '-',
-          className: 'slot2'
-        }, {
-          flex: 1,
-          values: ['2002', '2003', '2004', '2005', '2006', '2007', '2008', '2009', '2010', '2011', '2012', '2013', '2014', '2015', '2016'],
-          className: 'slot3',
-          textAlign: 'left'
-        }
-      ],
     }
   },
   mounted() {
     this.fetchData()
-    this.BUS.$on('time', (res) => {
+    this.BUS.$on('dinnerTimeVal', (res) => {
       this.dinnerTime = res
+      this.fetchData()
     })
   },
   methods: {
     fetchData() {
+      this.chefList = []
       this.$http.post('', {
         requestCode: '10104',
         type: 0,
@@ -83,15 +67,11 @@ export default {
     },
     searchChef(name) {
       this.fetchData()
-    },
-    onDateChange(picker, values) {
-        if (values[0] > values[1]) {
-          picker.setSlotValue(1, values[0]);
-        }
-        this.dateStart = values[0];
-        this.dateEnd = values[1];
-      },
+    }
   },
+  /* beforeRouteLeave(to, from, next) {
+    console.log(to)
+  }, */
   components: {
     SiftBox,
     TimePick

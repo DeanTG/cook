@@ -1,7 +1,7 @@
 <template>
   <div id="siftBox" class="space-between">
     <div id="timePicker" class="item" @click="pickTime">
-      <span>{{time?time:'用餐时间'}}</span>
+      <span>{{dinnerTime?dinnerTime:'用餐时间'}}</span>
       <i></i>
     </div>
     <div id="search" class="item" style="">
@@ -15,10 +15,16 @@ export default {
   name: 'SiftBox',
   data() {
     return {
-      chefName: this.name
+      chefName: this.name,
+      dinnerTime: this.time
     }
   },
   props: ['time','name'],
+  mounted(){
+    this.BUS.$on('dinnerTimeText', (res)=>{
+      this.dinnerTime = res
+    })
+  },
   methods: {
     pickTime() {
       this.BUS.$emit('openPicker')
@@ -44,7 +50,7 @@ export default {
   }
   .item {
     display: inline-block;
-    width: 110px;
+    width: 120px;
     height: 32px;
     line-height: 32px;
     border-radius: 16px;

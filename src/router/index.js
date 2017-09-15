@@ -8,6 +8,7 @@ import Collect from '../views/Collect.vue'
 import Me from '../views/Me.vue'
 import Private from '../views/Private.vue'
 import Banquet from '../views/Banquet.vue'
+import ChefDetails from '../views/ChefDetails.vue'
 
 
 Vue.use(Router)
@@ -74,6 +75,13 @@ export default new Router({
         title: '家有宴席'
       },
       component: Banquet
+    },
+    {
+      path: '/chefDetails',
+      meta: {
+        title: '厨师详情'
+      },
+      component: ChefDetails
     },
     {
       path: '*',
