@@ -1,11 +1,15 @@
 <template>
   <div id="chefDetails">
-    厨师详情页
+    <Swipe></Swipe>
   </div>
 </template>
 <script>
+import Swipe from '../components/Swipe'
 export default {
-  name: 'ChefDetails'
+  name: 'ChefDetails',
+  components:{
+    Swipe
+  }
 }
 </script>
 

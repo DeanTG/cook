@@ -5,7 +5,7 @@
       <SiftBox></SiftBox>
     </header>
     <ul id="companyList">
-      <router-link to="/banquet" v-for="(item,index) in companyList" :key="companyList.id" tag="li">
+      <router-link to="/banquet" v-for="(item,index) in companyList" :key="index" tag="li">
         <div class="companyInfo">
           <img :src="item.head_img_path ? item.head_img_path : 'static/images/default_image_square.png'" alt="">
           <div>
@@ -16,10 +16,12 @@
         <div class="location"><i class="iconfont icon-location"></i> {{item.address}}</div>
       </router-link>
     </ul>
+    <TimePick></TimePick>
   </div>
 </template>
 <script>
 import SiftBox from '../components/SiftBox.vue'
+import TimePick from '../components/TimePick'
 export default {
   name: 'Banquet',
   data(){
@@ -31,6 +33,10 @@ export default {
   },
   mounted(){
     this.fetchData()
+    this.BUS.$on('dinnerTimeVal', (res) => {
+      this.dinnerTime = res
+      this.fetchData()
+    })
   },
   methods:{
     fetchData(){
@@ -50,7 +56,8 @@ export default {
     }
   },
   components: {
-    SiftBox
+    SiftBox,
+    TimePick
   }
 }
 

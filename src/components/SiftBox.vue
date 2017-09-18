@@ -1,10 +1,10 @@
 <template>
-  <div id="siftBox" class="space-between">
+  <div id="siftBox" :class="showSearch?'space-between':''">
     <div id="timePicker" class="item" @click="pickTime">
       <span>{{dinnerTime?dinnerTime:'用餐时间'}}</span>
       <i></i>
     </div>
-    <div id="search" class="item" style="">
+    <div id="search" class="item" v-if="showSearch">
       <input v-model="chefName" type="text" placeholder="搜索烹饪师">
       <mt-button icon="search" @click="search"></mt-button>
     </div>
@@ -19,18 +19,23 @@ export default {
       dinnerTime: this.time
     }
   },
-  props: ['time','name'],
-  mounted(){
-    this.BUS.$on('dinnerTimeText', (res)=>{
+  props: ['time', 'name'],
+  mounted() {
+    this.BUS.$on('dinnerTimeText', (res) => {
       this.dinnerTime = res
     })
+  },
+  computed: {
+    showSearch() {
+      return this.$route.path.substring(1) === 'private' ? true : false
+    }
   },
   methods: {
     pickTime() {
       this.BUS.$emit('openPicker')
     },
     search() {
-      this.$emit('update:name',this.chefName)
+      this.$emit('update:name', this.chefName)
       this.$emit('searchChef')
     }
   }
