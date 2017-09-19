@@ -11,7 +11,7 @@
       </div>
     </header>
     <ul id="operate">
-      <router-link to="/pages/me" tag="li">
+      <router-link to="/address" tag="li">
         我的地址
       </router-link>
       <router-link to="/pages/index" tag="li">
