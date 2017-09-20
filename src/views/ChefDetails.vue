@@ -1,7 +1,7 @@
 <template>
   <div id="chefDetails">
     <Swipe></Swipe>
-    <div id="collect" :class="isCollected?'isCollected':''" class="iconfont icon-collect"></div>
+    <div id="collect" :class="isCollected?'isCollected':''" class="iconfont icon-collect" @click="collect"></div>
     <div id="chefInfo">
       <div class="avatar"><img :src="chef.head_img_path" alt=""></div>
       <h6 class="name">{{chef.name}}</h6>
@@ -17,28 +17,33 @@
         <i class="iconfont icon-star" v-for="i in chef.score" :key="i"></i>
       </div>
     </div>
-    <mt-navbar v-model="selected">
+    <mt-navbar class="subNav" v-model="selected">
       <mt-tab-item id="1">大厨菜谱</mt-tab-item>
       <mt-tab-item id="2">用户评价</mt-tab-item>
     </mt-navbar>
     <mt-tab-container v-model="selected">
       <mt-tab-container-item id="1">
-        1
+        <Goods></Goods>
+        <Cart></Cart>
       </mt-tab-container-item>
       <mt-tab-container-item id="2">
-        2
+        <Evaluation></Evaluation>
       </mt-tab-container-item>
     </mt-tab-container>
   </div>
 </template>
 <script>
 import Swipe from '../components/Swipe'
+import Goods from '../components/Goods'
+import Evaluation from '../components/Evaluation'
+import Cart from '../components/Cart'
 export default {
   name: 'ChefDetails',
   data() {
     return {
       isCollected: false,
       chef: {},
+      userId: this.$route.params.chefId,
       selected: '1'
     }
   },
@@ -52,7 +57,7 @@ export default {
         user_id: '3185',
         type: 1,
         login_name: '17895029210',
-        id: '110'
+        id: this.userId
       }).then((res) => {
         console.log(res)
         this.chef = res.data.wzsMember
@@ -62,18 +67,23 @@ export default {
       }).catch((err) => {
         console.log(err)
       })
+    },
+    collect(){
+      this.$messagebox.confirm('确认收藏该厨师？','').then(()=>{
+      },()=>{
+      })
     }
   },
   components: {
-    Swipe
+    Swipe,
+    Goods,
+    Evaluation,
+    Cart
   }
 }
 </script>
 <style lang="scss" scoped>
 #chefDetails {
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
   position: relative;
 }
 
@@ -84,6 +94,10 @@ export default {
   &.isCollected {
     color: $red;
   }
+}
+
+.subNav {
+  margin: 10px 0 3px;
 }
 
 #chefInfo {

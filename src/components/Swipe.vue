@@ -17,11 +17,11 @@ export default {
     }
   },
   mounted() {
-    if (this.$route.path.substring(1) == 'chefDetails') {
+    if (this.$route.path== '/pages/index') {
+      this.fetchData()
+    } else {
       this.fetchDetailsData()
       this.rightPagination = true
-    } else {
-      this.fetchData();
     }
   },
   methods: {

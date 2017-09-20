@@ -3,14 +3,14 @@
     <div id="manage" @click="manage">管理</div>
     <ul>
       <li v-for="(item,index) in addressList" :key="index">
-        <div class="delete"></div>
+        <div class="delete" @click="deleteAddress"></div>
         <div class="addressBox">
           <div class="addressContent">
             <p>{{item.name}}</p>
-            <p>{{item.phone}}</p>
+            <p>{{item.phone | encrypt}}</p>
             <p>{{item.address}}</p>
           </div>
-          <div :class="item.def?'checked':''" class="check"></div>
+          <div :class="item.def==0?'checked':''" class="check" @click="changeAddressState"></div>
         </div>
       </li>
     </ul>
@@ -41,6 +41,14 @@ export default {
         console.log(err)
       })
     },
+    deleteAddress() {
+      this.$messagebox.confirm('确认删除地址？', '').then(() => {
+      }, () => {
+      })
+    },
+    changeAddressState(e) {
+      e.target.className = "check checked"
+    },
     manage() {
     }
   }
@@ -51,13 +59,24 @@ export default {
   width: 90%;
   margin: 0 auto;
   li {
-    padding: 10px 15px;
+    display: flex;
+    align-items: center;
     margin-bottom: 10px;
     border-radius: 3px;
-    background: $lightBg;
+    .delete {
+      flex: 0 0 24px;
+      width: 24px;
+      height: 24px;
+      margin-right: 20px;
+      background: url('../../static/images/busy.png') no-repeat;
+      background-size: 100%;
+    }
     .addressBox {
       display: flex;
+      flex: 1;
       align-items: center;
+      padding: 10px 15px;
+      background: $lightBg;
     }
     .addressContent {
       flex: 1;
@@ -69,6 +88,7 @@ export default {
       flex: 0 0 24px;
       width: 24px;
       height: 24px;
+      margin-left: 10px;
       border: solid 2px $red;
       border-radius: 50%;
       &.checked {

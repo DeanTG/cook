@@ -8,6 +8,9 @@ import qs from 'qs'
 import MintUI from 'mint-ui'
 import 'mint-ui/lib/style.css'
 import 'normalize.css'
+import filters from './filters'
+
+Object.keys(filters).forEach(key => Vue.filter(key, filters[key]))
 
 Vue.use(MintUI)
 
@@ -38,7 +41,7 @@ axios.interceptors.response.use((res) => {
 })
 /*axios.defaults.baseURL = (process.env.NODE_ENV !=='production' ? config.dev.httpUrl:config.build.httpUrl);
 ;*/
-axios.defaults.baseURL = 'http://api.greenyao.com/wzs-api/s/api'; //http://api.greenyao.com/wzs-api/s/api
+axios.defaults.baseURL = 'http://tyapi.znzkj.net/wzs-api/s/api';
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
 axios.defaults.params = {
   accessToken: '',

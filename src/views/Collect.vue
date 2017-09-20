@@ -34,6 +34,5 @@ export default {
     color: $red;
   }
   .mint-tab-item-label{
-    font-size: 14px!important;
   }
 </style>

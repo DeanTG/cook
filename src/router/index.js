@@ -77,7 +77,7 @@ export default new Router({
       component: Banquet
     },
     {
-      path: '/chefDetails',
+      path: '/chefDetails/:chefId',
       meta: {
         title: '厨师详情'
       },

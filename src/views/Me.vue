@@ -6,7 +6,7 @@
         <img :src="headImg?headImg :'../../static/images/personal-center-title-bg.png'" alt="">
         <div>
           <p>{{name?name: '小食客'}}</p>
-          <p>{{phone?phone: ''}}</p>
+          <p>{{phone | encrypt}}</p>
         </div>
       </div>
     </header>
@@ -62,7 +62,9 @@ export default {
       })
     },
     signOut() {
-      
+      this.$messagebox.confirm('确认退出？','').then(()=>{
+      },()=>{
+      })
     }
   }
 }

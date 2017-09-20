@@ -5,24 +5,26 @@
       <SiftBox :time.sync="dinnerTime" :name.sync="chefName" @searchChef="searchChef"></SiftBox>
     </header>
     <ul class="chefList">
-      <router-link to="/chefDetails" v-for="(item,index) in chefList" :key="index" tag="li">
-        <img :src="item.dis_img_path?item.dis_img_path : 'static/images/default_image_square.png'" alt="">
-        <div class="details">
-          <div class="details-left">
-            <div class="avatar">
-              <img :src="item.head_img_path ? item.head_img_path : 'static/images/picheader.png'" alt="">
-              <i class="busy" v-if="item.state == 1 || item.cook_state == 2"></i>
+      <li v-for="(item,index) in chefList" :key="index">
+        <router-link :to="'/chefDetails/' +item.id">
+          <img class="foodPic" :src="item.dis_img_path?item.dis_img_path : 'static/images/default_image_square.png'" alt="">
+          <div class="details">
+            <div class="details-left">
+              <div class="avatar">
+                <img :src="item.head_img_path ? item.head_img_path : 'static/images/picheader.png'" alt="">
+                <i class="busy" v-if="item.state == 1 || item.cook_state == 2"></i>
+              </div>
+              <p>{{item.name}}</p>
             </div>
-            <p>{{item.name}}</p>
+            <div class="details-right">
+              <p>擅长：{{item.good_at_cook?item.good_at_cook: '暂无数据'}}</p>
+              <p>好评：
+                <i v-for="index in item.score" :key="index" class="iconfont icon-star"></i>
+              </p>
+            </div>
           </div>
-          <div class="details-right">
-            <p>擅长：{{item.good_at_cook?item.good_at_cook: '暂无数据'}}</p>
-            <p>好评：
-              <i v-for="index in item.score" :key="index" class="iconfont icon-star"></i>
-            </p>
-          </div>
-        </div>
-      </router-link>
+        </router-link>
+      </li>
     </ul>
     <TimePick></TimePick>
   </div>
@@ -110,7 +112,7 @@ body {
     border-radius: 4px;
     background: $lightBg;
     position: relative;
-    &>img {
+    .foodPic {
       display: block;
       width: 90%;
       height: 185px;
