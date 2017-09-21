@@ -12,6 +12,9 @@
         </div>
       </div>
       <div class="evaluationPic">
+        <div v-for="(val,index) in item.img_path" :key="index">
+          <img :src="val" alt="">
+        </div>
       </div>
       <p class="remark">{{item.remark}}</p>
     </li>
@@ -37,7 +40,15 @@ export default {
         'page.showCount': 200
       }).then((res) => {
         console.log(res)
-        this.evaluation = res.data.objects
+        if (!res.data.objects.length) return
+        res.data.objects.forEach((val, index, arr) => {
+          if (val.img_path) {
+            val.img_path = val.img_path.split(',');
+          } else {
+            val.img_path = []
+          }
+        });
+        this.evaluation = res.data.objects;
       }).catch((err) => {
         console.log(err)
       })
@@ -70,7 +81,7 @@ export default {
         font-size: 12px;
         h6 {
           margin-bottom: 5px;
-          i{
+          i {
             color: $red;
           }
         }
@@ -79,7 +90,20 @@ export default {
         }
       }
     }
-    .remark{
+    .evaluationPic{
+      display: flex;
+      &>div{
+        flex: 0 0 30%;
+        width: 30%;
+        height: 70px;
+        margin: 0 10px 5px 0;
+      }
+      img{
+        width: 100%;
+        height: 100%;
+      }
+    }
+    .remark {
       line-height: 1.5;
       margin-top: 10px;
       font-size: 12px;

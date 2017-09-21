@@ -90,11 +90,8 @@ export default {
       flex: 1;
       margin-left: 20px;
       line-height: 1.5;
-      flex-wrap: wrap;
-      align-content: space-between;
-      p {
-        width: 100%;
-      }
+      flex-direction: column;
+      justify-content: space-between;
     }
   }
 }

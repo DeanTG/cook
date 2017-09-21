@@ -9,6 +9,7 @@ import Me from '../views/Me.vue'
 import Private from '../views/Private.vue'
 import Banquet from '../views/Banquet.vue'
 import ChefDetails from '../views/ChefDetails.vue'
+import Pay from '../views/Pay.vue'
 import Address from '../views/Address.vue'
 
 Vue.use(Router)
@@ -82,6 +83,13 @@ export default new Router({
         title: '厨师详情'
       },
       component: ChefDetails
+    },
+    {
+      path: '/pay',
+      meta: {
+        title: '确认信息'
+      },
+      component: Pay
     },
     {
       path: '/address',
