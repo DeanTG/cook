@@ -10,6 +10,15 @@
       <router-link to="/pay" class="booking">预定</router-link>
       <div class="booking-tips" style="display:none">200元起接单</div>
     </div>
+    <div id="cartFood" style="display:none">
+      <div>
+        <span>已选菜单</span>
+        <span>清空购物车</span>
+      </div>
+      <div>
+
+      </div>
+    </div>
   </div>
 </template>
 <script>
@@ -25,9 +34,7 @@ export default {
   height: 50px;
   line-height: 50px;
   background: $lightBlack;
-  position: fixed;
-  bottom: 0;
-  left: 0;
+  position: relative;
   .cartIcon {
     flex: 0 0 65px;
     width: 65px;
@@ -78,6 +85,14 @@ export default {
       font-size: 12px;
     }
   }
+}
+#cartFood{
+  padding-bottom: 30px;
+  background: $black;
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+
 }
 </style>
 

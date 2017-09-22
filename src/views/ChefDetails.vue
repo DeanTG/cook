@@ -1,35 +1,37 @@
 <template>
   <div id="chefDetails">
-    <Swipe></Swipe>
-    <div id="collect" :class="isCollected?'isCollected':''" class="iconfont icon-collect" @click="collect"></div>
-    <div id="chefInfo">
-      <div class="avatar"><img :src="chef.head_img_path" alt=""></div>
-      <h6 class="name">{{chef.name}}</h6>
-      <p>
-        <span>简介：</span>
-        <span>{{chef.brief_introduction?chef.brief_introduction:'暂无数据'}}</span>
-      </p>
-      <p>
-        <span>擅长：</span>
-        <span>{{chef.good_at_cook?chef.good_at_cook:'暂无数据'}}</span>
-      </p>
-      <div class="star">
-        <i class="iconfont icon-star" v-for="i in chef.score" :key="i"></i>
+    <div class="chefDetails-main">
+      <Swipe></Swipe>
+      <div id="collect" :class="isCollected?'isCollected':''" class="iconfont icon-collect" @click="collect"></div>
+      <div id="chefInfo" ref="chefInfo">
+        <div class="avatar"><img :src="chef.head_img_path" alt=""></div>
+        <h6 class="name">{{chef.name}}</h6>
+        <p>
+          <span>简介：</span>
+          <span>{{chef.brief_introduction?chef.brief_introduction:'暂无数据'}}</span>
+        </p>
+        <p>
+          <span>擅长：</span>
+          <span>{{chef.good_at_cook?chef.good_at_cook:'暂无数据'}}</span>
+        </p>
+        <div class="star">
+          <i class="iconfont icon-star" v-for="i in chef.score" :key="i"></i>
+        </div>
       </div>
+      <mt-navbar class="subNav" v-model="selected">
+        <mt-tab-item id="1">大厨菜谱</mt-tab-item>
+        <mt-tab-item id="2">用户评价</mt-tab-item>
+      </mt-navbar>
+      <mt-tab-container v-model="selected">
+        <mt-tab-container-item id="1">
+          <Goods></Goods>
+        </mt-tab-container-item>
+        <mt-tab-container-item id="2">
+          <Evaluation></Evaluation>
+        </mt-tab-container-item>
+      </mt-tab-container>
     </div>
-    <mt-navbar class="subNav" v-model="selected">
-      <mt-tab-item id="1">大厨菜谱</mt-tab-item>
-      <mt-tab-item id="2">用户评价</mt-tab-item>
-    </mt-navbar>
-    <mt-tab-container v-model="selected">
-      <mt-tab-container-item id="1">
-        <Goods></Goods>
-        <Cart></Cart>
-      </mt-tab-container-item>
-      <mt-tab-container-item id="2">
-        <Evaluation></Evaluation>
-      </mt-tab-container-item>
-    </mt-tab-container>
+    <Cart class="cart" v-show="this.selected==1"></Cart>
   </div>
 </template>
 <script>
@@ -48,8 +50,9 @@ export default {
     }
   },
   mounted() {
-    console.log(this.$route)
-    this.getChefInfo()
+    console.log(window.getComputedStyle(this.$refs.chefInfo).getPropertyValue("height"))
+    this.getChefInfo();
+    console.log(document.documentElement.clientHeight)    
   },
   methods: {
     getChefInfo() {
@@ -69,10 +72,11 @@ export default {
         console.log(err)
       })
     },
-    collect(){
-      this.$messagebox.confirm('确认收藏该厨师？','').then(()=>{
+    collect() {
+      this.isCollected = !this.isCollected
+      /* this.$messagebox.confirm('确认收藏该厨师？','').then(()=>{
       },()=>{
-      })
+      }) */
     }
   },
   components: {
@@ -85,8 +89,24 @@ export default {
 </script>
 <style lang="scss" scoped>
 #chefDetails {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
   position: relative;
+  .chefDetails-main {
+    flex: 1;
+    overflow: scroll;
+    position: relative;
+  }
+  .cart {
+    flex: 0 0 50px;
+  }
 }
+
+.swipe {}
 
 #collect {
   position: absolute;

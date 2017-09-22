@@ -11,6 +11,7 @@
         <div class="foodInfo">
           <p>{{foodItem.name}}</p>
           <p>¥{{foodItem.price}}</p>
+          <button class="add"></button>
         </div>
       </li>
     </ul>
@@ -92,6 +93,17 @@ export default {
       line-height: 1.5;
       flex-direction: column;
       justify-content: space-between;
+      position: relative;
+      .add{
+        display: block;
+        width: 26px;
+        height: 26px;
+        background: url('../../static/images/tianjia.png') no-repeat;
+        background-size: contain;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+      }
     }
   }
 }
