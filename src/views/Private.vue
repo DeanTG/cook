@@ -5,25 +5,23 @@
       <SiftBox :time.sync="dinnerTime" :name.sync="chefName" @searchChef="searchChef"></SiftBox>
     </header>
     <ul class="chefList">
-      <li v-for="(item,index) in chefList" :key="index">
-        <router-link :to="'/chefDetails/' +item.id">
-          <img class="foodPic" :src="item.dis_img_path?item.dis_img_path : 'static/images/default_image_square.png'" alt="">
-          <div class="details">
-            <div class="details-left">
-              <div class="avatar">
-                <img :src="item.head_img_path ? item.head_img_path : 'static/images/picheader.png'" alt="">
-                <i class="busy" v-if="item.state == 1 || item.cook_state == 2"></i>
-              </div>
-              <p>{{item.name}}</p>
+      <li v-for="(item,index) in chefList" :key="index" @click="toDetail(item.id)">
+        <img class="foodPic" :src="item.dis_img_path?item.dis_img_path : 'static/images/default_image_square.png'" alt="">
+        <div class="details">
+          <div class="details-left">
+            <div class="avatar">
+              <img :src="item.head_img_path ? item.head_img_path : 'static/images/picheader.png'" alt="">
+              <i class="busy" v-if="item.state == 1 || item.cook_state == 2"></i>
             </div>
-            <div class="details-right">
-              <p>擅长：{{item.good_at_cook?item.good_at_cook: '暂无数据'}}</p>
-              <p>好评：
-                <i v-for="index in item.score" :key="index" class="iconfont icon-star"></i>
-              </p>
-            </div>
+            <p>{{item.name}}</p>
           </div>
-        </router-link>
+          <div class="details-right">
+            <p>擅长：{{item.good_at_cook?item.good_at_cook: '暂无数据'}}</p>
+            <p>好评：
+              <i v-for="index in item.score" :key="index" class="iconfont icon-star"></i>
+            </p>
+          </div>
+        </div>
       </li>
     </ul>
     <TimePick></TimePick>
@@ -69,11 +67,15 @@ export default {
     },
     searchChef(name) {
       this.fetchData()
+    },
+    toDetail(id) {
+      if (this.dinnerTime) {
+        this.$router.push({ path: '/chefDetails',query:{chefId: id}})
+      } else {
+        this.$toast('请先选择用餐时间')
+      }
     }
   },
-  /* beforeRouteLeave(to, from, next) {
-    console.log(to)
-  }, */
   components: {
     SiftBox,
     TimePick
@@ -84,6 +86,26 @@ export default {
 <style lang="scss" scoped>
 body {
   background: $black;
+}
+
+#private {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+header,
+.chefList {
+  width: 90%;
+  margin: 0 auto;
+}
+
+header {
+  flex: 0 0 102px;
+  padding-bottom: 20px;
 }
 
 .info {
@@ -98,20 +120,18 @@ body {
   text-align: center;
 }
 
-#private {
-  width: 90%;
-  padding-bottom: 20px;
-  margin: 0 auto;
-}
-
 .chefList {
-  overflow: hidden;
+  flex: 1;
+  overflow: scroll;
   li {
     padding-top: 165px;
-    margin-top: 40px;
+    margin: 20px 0 40px;
     border-radius: 4px;
     background: $lightBg;
     position: relative;
+    &:last-child {
+      margin-bottom: 20px;
+    }
     .foodPic {
       display: block;
       width: 90%;

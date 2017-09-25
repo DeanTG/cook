@@ -103,7 +103,7 @@ header {
   flex-wrap: wrap;
   width: 90%;
   padding: 0 15px;
-  margin: 25px auto 0;
+  margin: 25px auto 30px;
   position: relative;
   &::before,
   &::after {

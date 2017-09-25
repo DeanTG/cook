@@ -1,7 +1,7 @@
 <template>
   <div id="chefDetails">
     <div class="chefDetails-main">
-      <Swipe></Swipe>
+      <Swipe :chefId="chefId"></Swipe>
       <div id="collect" :class="isCollected?'isCollected':''" class="iconfont icon-collect" @click="collect"></div>
       <div id="chefInfo" ref="chefInfo">
         <div class="avatar"><img :src="chef.head_img_path" alt=""></div>
@@ -24,10 +24,10 @@
       </mt-navbar>
       <mt-tab-container v-model="selected">
         <mt-tab-container-item id="1">
-          <Goods></Goods>
+          <Goods :chefId="chefId"></Goods>
         </mt-tab-container-item>
         <mt-tab-container-item id="2">
-          <Evaluation></Evaluation>
+          <Evaluation :chefId="chefId"></Evaluation>
         </mt-tab-container-item>
       </mt-tab-container>
     </div>
@@ -45,14 +45,13 @@ export default {
     return {
       isCollected: false,
       chef: {},
-      userId: this.$route.params.chefId,
+      chefId: this.$route.query.chefId,
       selected: '1'
     }
   },
   mounted() {
-    console.log(window.getComputedStyle(this.$refs.chefInfo).getPropertyValue("height"))
+    console.log(this.$route)
     this.getChefInfo();
-    console.log(document.documentElement.clientHeight)    
   },
   methods: {
     getChefInfo() {
@@ -61,7 +60,7 @@ export default {
         user_id: '3185',
         type: 1,
         login_name: '17895029210',
-        id: this.userId
+        id: this.chefId
       }).then((res) => {
         console.log(res)
         this.chef = res.data.wzsMember
@@ -73,10 +72,30 @@ export default {
       })
     },
     collect() {
-      this.isCollected = !this.isCollected
-      /* this.$messagebox.confirm('确认收藏该厨师？','').then(()=>{
-      },()=>{
-      }) */
+      if (this.isCollected) {
+        this.$messagebox.confirm('确认取消收藏？', '').then(() => {
+          this.$http.post('', {
+            requestCode: '70002',
+            collector_id: this.chefId,
+            user_id: '3185'
+          }).then((res) => {
+            this.isCollected = false;
+          }).catch((err) => {
+            console.log(err)
+          })
+        }, () => {
+        })
+      } else {
+        this.$http.post('', {
+          requestCode: '70001',
+          collector_id: this.chefId,
+          user_id: '3185'
+        }).then((res) => {
+          this.isCollected = true;
+        }).catch((err) => {
+          console.log(err)
+        })
+      }
     }
   },
   components: {
@@ -105,8 +124,6 @@ export default {
     flex: 0 0 50px;
   }
 }
-
-.swipe {}
 
 #collect {
   position: absolute;

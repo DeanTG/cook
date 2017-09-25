@@ -28,6 +28,7 @@ export default {
       evaluation: []
     }
   },
+  props: ['chefId'],
   mounted() {
     this.getEvaluation();
   },
@@ -35,7 +36,7 @@ export default {
     getEvaluation() {
       this.$http.post('', {
         requestCode: '30001',
-        id: '110',
+        id: this.chefId,
         'page.currentPage': 1,
         'page.showCount': 200
       }).then((res) => {

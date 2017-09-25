@@ -16,6 +16,7 @@ export default {
       rightPagination: false
     }
   },
+  props:['chefId'],
   mounted() {
     if (this.$route.path== '/pages/index') {
       this.fetchData()
@@ -44,7 +45,7 @@ export default {
           user_id: '3185',
           type: 1,
           login_name: '17895029210',
-          id: '110'
+          id: this.chefId
         })
       }
       let getSpecialityPic = () => {
@@ -52,7 +53,7 @@ export default {
           requestCode: "20001",
           type: 0,
           xl_id: 1,
-          member_id: '110',
+          member_id: this.chefId,
           res_type: 1,
           'page.currentPage': 1,
           'page.showCount': 100
