@@ -67,9 +67,6 @@ export default {
       }
     },
     onDateChange(picker, values, index) {
-      /* if (values[0] > values[1]) {
-        picker.setSlotValue(1, values[0]);
-      } */
       if (values[0] && values[1]) {
         let newVal = values[0].replace(/月/, '-'),
           dateVal = newVal.replace(/日/, '');
@@ -79,7 +76,11 @@ export default {
     },
     closePopup() {
       this.BUS.$emit('dinnerTimeText', this.timeText)
-      this.BUS.$emit('dinnerTimeVal', this.timeVal)
+      if (this.$route.path.substring(1) == 'private') {
+        this.BUS.$emit('dinnerTimeVal', this.timeVal)
+      } else {
+        this.BUS.$emit('collect_dinnerTimeVal', this.timeVal)
+      }
       this.popupVisible = false;
     }
   }

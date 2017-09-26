@@ -11,6 +11,9 @@ import Banquet from '../views/Banquet.vue'
 import ChefDetails from '../views/ChefDetails.vue'
 import Pay from '../views/Pay.vue'
 import Address from '../views/Address.vue'
+import PushEvaluation from '../views/PushEvaluation.vue'
+import Wallet from '../views/Wallet.vue'
+import Comment from '../views/Comment.vue'
 
 Vue.use(Router)
 
@@ -97,6 +100,27 @@ export default new Router({
         title: '我的地址'
       },
       component: Address
+    },
+    {
+      path: '/pushEvaluation',
+      meta: {
+        title: '评论'
+      },
+      component: PushEvaluation
+    },
+    {
+      path: '/wallet',
+      meta: {
+        title: '我的钱包'
+      },
+      component: Wallet
+    },
+    {
+      path: '/comment',
+      meta: {
+        title: '我的评论'
+      },
+      component: Comment
     },
     {
       path: '*',

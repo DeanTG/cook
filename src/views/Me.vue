@@ -14,22 +14,14 @@
       <router-link to="/address" tag="li">
         我的地址
       </router-link>
-      <router-link to="/pages/index" tag="li">
+      <router-link to="/wallet" tag="li">
         我的钱包
       </router-link>
-      <router-link to="/pages/me" tag="li">
-        我的优惠券
-      </router-link>
-      <router-link to="/pages/index" tag="li">
+      <router-link to="/comment" tag="li">
         我的评论
       </router-link>
-      <router-link to="/pages/me" tag="li">
-        我的消息
-      </router-link>
-      <li @click="signOut">
-        退出登录
-      </li>
     </ul>
+    <button class="signOut" @click="signOut">退出登录</button>
   </div>
 </template>
 <script>
@@ -75,7 +67,7 @@ header {
   &>img {
     display: block;
     width: 100%;
-    height: 150px;
+    height: 140px;
   }
   .personalInfo {
     width: 80%;
@@ -145,5 +137,17 @@ header {
       background-image: url('../../static/images/sign-out-icon.png');
     }
   }
+}
+.signOut{
+  display: block;
+  width: 90%;
+  height: 46px;
+  line-height: 46px;
+  margin: 80px auto 0;
+  border-radius: 23px;
+  background: $red;
+  color: #fff;
+  font-size: 18px;
+  text-align: center;
 }
 </style>

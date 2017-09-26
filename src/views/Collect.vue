@@ -1,38 +1,50 @@
 <template>
   <div id="collect">
-    <mt-navbar v-model="selected">
-      <mt-tab-item id="1">收藏的厨师</mt-tab-item>
-      <mt-tab-item id="2">收藏的公司</mt-tab-item>
-    </mt-navbar>
-    <mt-tab-container v-model="selected">
-      <mt-tab-container-item id="1">
-        1
-      </mt-tab-container-item>
-      <mt-tab-container-item id="2">
-        2
-      </mt-tab-container-item>
-    </mt-tab-container>
+    <SiftBox class="collect-siftBox"></SiftBox>
+    <div class="collect-chefList">
+      <ChefList></ChefList>
+    </div>
+    <TimePick></TimePick>
   </div>
 </template>
 <script>
+import SiftBox from '../components/SiftBox'
+import TimePick from '../components/TimePick'
+import ChefList from '../components/chefList'
 export default {
   name: 'Collect',
-  data(){
+  data() {
     return {
       selected: '1'
     }
+  },
+  components: {
+    SiftBox,
+    TimePick,
+    ChefList
   }
 }
 
 </script>
-<style lang="scss">
-  .mint-navbar{
-    background: $black;
-  }
-  .mint-navbar .mint-tab-item.is-selected{
-    border-color: $red;
-    color: $red;
-  }
-  .mint-tab-item-label{
-  }
+<style lang="scss" scoped>
+#collect {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  margin: 0 auto;
+  overflow: hidden;
+
+}
+.collect-siftBox{
+  flex: 0 0 35px;
+  width: 90%;
+  margin: 0 auto;
+}
+.collect-chefList {
+  flex: 1;
+  width: 90%;
+  margin: 20px auto 0;
+  overflow: scroll;
+}
 </style>
