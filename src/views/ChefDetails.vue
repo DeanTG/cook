@@ -31,7 +31,7 @@
         </mt-tab-container-item>
       </mt-tab-container>
     </div>
-    <Cart class="cart" v-show="this.selected==1"></Cart>
+    <Cart class="cart" :order="order" v-show="this.selected==1"></Cart>
   </div>
 </template>
 <script>
@@ -45,20 +45,22 @@ export default {
     return {
       isCollected: false,
       chef: {},
-      chefId: this.$route.query.chefId,
+      order: JSON.parse(this.$route.query.order),
+      chefId: JSON.parse(this.$route.query.order).chef.id,
       selected: '1'
     }
   },
   mounted() {
+    console.log(this.order)
     this.getChefInfo();
   },
   methods: {
     getChefInfo() {
       this.$http.post('', {
         requestCode: "10003",
-        user_id: '3185',
+        user_id: '151',
         type: 1,
-        login_name: '17895029210',
+        login_name: '15950455203',
         id: this.chefId
       }).then((res) => {
         console.log(res)

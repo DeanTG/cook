@@ -1,20 +1,20 @@
 <template>
   <div id="address">
-    <div id="manage" @click="manage">管理</div>
+    <div id="manage" @click="manage">{{showDelete?'保存':'管理'}}</div>
     <ul>
       <li v-for="(item,index) in addressList" :key="index">
-        <div class="delete" @click="deleteAddress"></div>
+        <div class="delete" :class="{'show':showDelete}" @click="deleteAddress(index)"></div>
         <div class="addressBox">
           <div class="addressContent">
             <p>{{item.name}}</p>
             <p>{{item.phone | encrypt}}</p>
             <p>{{item.address}}</p>
           </div>
-          <div :class="item.def==0?'checked':''" class="check" @click="changeAddressState"></div>
+          <div :class="{'checked': index===def}" class="check" @click="changeAddressState(index)" v-show="!showDelete"></div>
         </div>
       </li>
     </ul>
-    <router-link to="/addAddress" class="my-btn">新增地址</router-link>
+    <router-link to="/addAddress" class="my-btn" v-show="!showDelete">新增地址</router-link>
   </div>
 </template>
 <script>
@@ -23,7 +23,8 @@ export default {
   data() {
     return {
       addressList: [],
-      checked: true
+      def: -1,
+      showDelete: false
     }
   },
   mounted() {
@@ -33,23 +34,38 @@ export default {
     getAddress() {
       this.$http.post('', {
         requestCode: "10100",
-        member_id: '3185'
+        member_id: '151'
       }).then((res) => {
         console.log(res)
+        res.data.objects.forEach((val, index, arr) => {
+          if (val.def == 0) {
+            this.def = index
+          }
+        });
         this.addressList = res.data.objects
       }).catch((err) => {
         console.log(err)
       })
     },
-    deleteAddress() {
+    deleteAddress(i) {
       this.$messagebox.confirm('确认删除地址？', '').then(() => {
+        this.addressList.splice(i, 1)
       }, () => {
       })
     },
-    changeAddressState(e) {
-      e.target.className = "check checked"
+    changeAddressState(i) {
+      if (this.def == i) {
+        this.def = -1
+      } else {
+        this.def = i
+      }
     },
     manage() {
+      if (this.showDelete) {
+        this.showDelete = false
+      } else {
+        this.showDelete = true
+      }
     }
   }
 }
@@ -64,12 +80,19 @@ export default {
     margin-bottom: 10px;
     border-radius: 3px;
     .delete {
-      flex: 0 0 24px;
-      width: 24px;
+      flex: 0 0 0;
+      width: 0;
       height: 24px;
-      margin-right: 20px;
+      margin-right: 0;
       background: url('../../static/images/busy.png') no-repeat;
       background-size: 100%;
+      transition: all 0.3s linear;
+      &.show {
+        flex: 0 0 24px;
+        width: 24px;
+        margin-right: 20px;
+        transition: all 0.3s linear;
+      }
     }
     .addressBox {
       display: flex;

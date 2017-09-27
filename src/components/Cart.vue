@@ -7,7 +7,7 @@
       <div class="totalPrice">
         <em>{{totalPrice?totalPrice:0}}</em>元
       </div>
-      <router-link to="/pay" class="booking" v-show="totalPrice>=200">预定</router-link>
+      <div class="booking" v-show="totalPrice>=200" @click="toPay">预定</div>
       <div class="booking-tips" v-show="totalPrice<200">200元起接单</div>
     </div>
     <div id="cartFood" v-show="showCartFood">
@@ -38,6 +38,7 @@ export default {
       showCartFood: false
     }
   },
+  props: ['order'],
   computed: {
     totalPrice() {
       let price = 0;
@@ -82,6 +83,11 @@ export default {
       if (this.selectFood.length) {
         this.showCartFood = !this.showCartFood;
       }
+    },
+    toPay() {
+      let order = this.order;
+      order.food = this.selectFood
+      this.$router.push({ path: '/pay', query: { 'order': JSON.stringify(order) } })
     }
   }
 }

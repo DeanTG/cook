@@ -11,6 +11,7 @@ import Banquet from '../views/Banquet.vue'
 import ChefDetails from '../views/ChefDetails.vue'
 import Pay from '../views/Pay.vue'
 import Address from '../views/Address.vue'
+import AddAddress from '../views/AddAddress.vue'
 import PushEvaluation from '../views/PushEvaluation.vue'
 import Wallet from '../views/Wallet.vue'
 import Comment from '../views/Comment.vue'
@@ -100,6 +101,13 @@ export default new Router({
         title: '我的地址'
       },
       component: Address
+    },
+    {
+      path: '/addAddress',
+      meta: {
+        title: '新增地址'
+      },
+      component: AddAddress
     },
     {
       path: '/pushEvaluation',

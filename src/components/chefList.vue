@@ -1,6 +1,6 @@
 <template>
   <ul class="chefList">
-    <li v-for="(item,index) in chefList" :key="index" @click="toDetail(item.id)">
+    <li v-for="(item,index) in chefList" :key="index" @click="toDetail(item.id,item.name)">
       <img class="foodPic" :src="item.dis_img_path?item.dis_img_path : 'static/images/default_image_square.png'" alt="">
       <div class="details">
         <div class="details-left">
@@ -85,9 +85,16 @@ export default {
         console.log(err)
       })
     },
-    toDetail(id) {
+    toDetail(id, name) {
       if (this.dinnerTime) {
-        this.$router.push({ path: '/chefDetails', query: { chefId: id } })
+        let order = {
+          chef: {
+            id: id,
+            name: name
+          },
+          time: this.dinnerTime
+        };
+        this.$router.push({ path: '/chefDetails', query: { 'order': JSON.stringify(order) } })
       } else {
         this.$toast('请先选择用餐时间')
       }
