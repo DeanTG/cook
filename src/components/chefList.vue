@@ -94,7 +94,8 @@ export default {
           },
           time: this.dinnerTime
         };
-        this.$router.push({ path: '/chefDetails', query: { 'order': JSON.stringify(order) } })
+        this.$router.push({ path: '/chefDetails' })
+        localStorage.setItem('order', JSON.stringify(order))
       } else {
         this.$toast('请先选择用餐时间')
       }

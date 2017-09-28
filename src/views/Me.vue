@@ -54,8 +54,10 @@ export default {
       })
     },
     signOut() {
-      this.$messagebox.confirm('确认退出？','').then(()=>{
-      },()=>{
+      this.$messagebox.confirm('确认退出？', '').then(() => {
+        localStorage.removeItem('userId')
+        this.$router.push({path: '/login'})
+      }, () => {
       })
     }
   }
@@ -138,7 +140,8 @@ header {
     }
   }
 }
-.signOut{
+
+.signOut {
   display: block;
   width: 90%;
   height: 46px;

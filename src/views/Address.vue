@@ -1,8 +1,8 @@
 <template>
   <div id="address">
-    <div id="manage" @click="manage">{{showDelete?'保存':'管理'}}</div>
+    <div id="manage" @click="manage" v-show="!fromPay">{{showDelete?'保存':'管理'}}</div>
     <ul>
-      <li v-for="(item,index) in addressList" :key="index">
+      <li v-for="(item,index) in addressList" :key="index" @click="backPay(index)">
         <div class="delete" :class="{'show':showDelete}" @click="deleteAddress(index)"></div>
         <div class="addressBox">
           <div class="addressContent">
@@ -10,7 +10,7 @@
             <p>{{item.phone | encrypt}}</p>
             <p>{{item.address}}</p>
           </div>
-          <div :class="{'checked': index===def}" class="check" @click="changeAddressState(index)" v-show="!showDelete"></div>
+          <div :class="{'checked': index===def}" class="check" @click="changeAddressState(index)" v-show="!showDelete && !fromPay"></div>
         </div>
       </li>
     </ul>
@@ -24,8 +24,12 @@ export default {
     return {
       addressList: [],
       def: -1,
-      showDelete: false
+      showDelete: false,
+      fromPay: false,
     }
+  },
+  beforeMount() {
+    if (JSON.parse(localStorage.getItem('order'))) this.fromPay = true
   },
   mounted() {
     this.getAddress()
@@ -66,6 +70,13 @@ export default {
       } else {
         this.showDelete = true
       }
+    },
+    backPay(i) {
+      if (!this.fromPay) return
+      let order = JSON.parse(localStorage.getItem('order'));
+      order.address = this.addressList[i];
+      this.$router.push({ path: '/pay' })
+      localStorage.setItem('order', JSON.stringify(order))
     }
   }
 }
@@ -74,6 +85,9 @@ export default {
 #address {
   width: 90%;
   margin: 0 auto;
+  ul {
+    padding-top: 20px;
+  }
   li {
     display: flex;
     align-items: center;
@@ -124,7 +138,7 @@ export default {
 }
 
 #manage {
-  padding: 20px 0;
+  padding: 20px 0 0;
   color: $red;
   text-align: right;
 }

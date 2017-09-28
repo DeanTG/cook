@@ -15,6 +15,9 @@
 import Swipe from '../components/Swipe.vue'
 export default {
   name: 'Index',
+  mounted(){
+    localStorage.removeItem('order')
+  },
   components: {
     Swipe
   }

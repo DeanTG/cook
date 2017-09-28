@@ -62,9 +62,12 @@ export default {
     },
     publish() {
       if (this.content.length) {
-
+        this.$toast('评价成功')
+        let timer = setTimeout(() => {
+          history.go(-1)
+        }, 500)
       } else {
-        this.$toast('1212')
+        this.$toast('请输入评价内容')
         return
       }
     },

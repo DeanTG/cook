@@ -25,10 +25,16 @@ export default {
       menu: [],
       menuIndex: '',
       foods: [],
-      selectFood: []
+      selectFood: [],
     }
   },
-  props:['chefId'],
+  props: ['chefId'],
+  beforeMount() {
+    let localOrder = JSON.parse(localStorage.getItem('order'));
+    if (localOrder.food) {
+      this.selectFood = localOrder.food;
+    }
+  },
   mounted() {
     let vh = document.documentElement.clientHeight;
     this.$refs.goods.style.height = vh - 99 + 'px';

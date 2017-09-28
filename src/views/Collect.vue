@@ -18,6 +18,9 @@ export default {
       selected: '1'
     }
   },
+  mounted(){
+    localStorage.removeItem('order')
+  },
   components: {
     SiftBox,
     TimePick,

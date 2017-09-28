@@ -25,6 +25,19 @@ axios.interceptors.request.use((config) => {
   if (config.method === 'post') {
     config.data = qs.stringify(config.data);
   }
+  router.beforeEach((to, from, next) => {
+    if (to.path.indexOf('login') == -1) {
+      if (!localStorage.getItem('userId')) {
+        next({
+          path: '/login'
+        })
+      } else {
+        next()
+      }
+    } else {
+      next()
+    }
+  })
   return config;
 }, (error) => {
   return Promise.reject(error);

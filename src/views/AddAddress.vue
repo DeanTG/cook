@@ -1,12 +1,12 @@
 <template>
   <div id="addAddress">
     <h6>
-      <router-link to='/address'>保存</router-link>
+      <span @click="save">保存</span>
     </h6>
     <ul>
       <li>
         <div class="left">姓名</div>
-        <div class="right"><input type="text" placeholder="请输入您的姓名"></div>
+        <div class="right"><input v-model="name" type="text" placeholder="请输入您的姓名"></div>
       </li>
       <li>
         <div class="left">性别</div>
@@ -17,7 +17,7 @@
       </li>
       <li>
         <div class="left">手机</div>
-        <div class="right"><input type="text" placeholder="请输入您的手机号"></div>
+        <div class="right"><input v-model="phone" type="text" placeholder="请输入您的手机号"></div>
       </li>
       <li>
         <div class="flex">
@@ -27,7 +27,7 @@
             <!-- <span class="checkArea">选择地区</span> -->
           </div>
         </div>
-        <div><input type="text" placeholder="请输入详细地址"></div>
+        <div><input v-model="address" type="text" placeholder="请输入详细地址"></div>
       </li>
     </ul>
   </div>
@@ -37,12 +37,33 @@ export default {
   name: 'AddAddress',
   data() {
     return {
-      radioVal: 1
+      name: '',
+      radioVal: 1,
+      phone: '',
+      address: ''
     }
   },
   methods: {
     radioCheck(i) {
       this.radioVal = i;
+    },
+    save() {
+      if (!this.name) {
+        this.$toast('请输入姓名')
+        return
+      }
+      if (!this.phone) {
+        this.$toast('请输入手机')
+        return
+      }
+      if (!this.address) {
+        this.$toast('请输入地址')
+        return
+      }
+      this.$toast('新建地址成功')
+      let timer = setTimeout(() => {
+        this.$router.push({ path: '/address' })
+      }, 500)
     }
   }
 }
@@ -53,7 +74,7 @@ export default {
   margin: 20px auto 0;
   h6 {
     text-align: right;
-    a {
+    span {
       color: $red;
     }
   }
@@ -114,7 +135,7 @@ export default {
         .checkArea {
           padding: 4px 15px;
           border: 1px solid rgba(255, 255, 255, 0.14);
-          &::after{
+          &::after {
             content: '';
             display: inline-block;
             width: 16px;

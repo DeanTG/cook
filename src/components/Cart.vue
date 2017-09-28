@@ -35,7 +35,7 @@ export default {
   data() {
     return {
       selectFood: [],
-      showCartFood: false
+      showCartFood: false,
     }
   },
   props: ['order'],
@@ -53,6 +53,12 @@ export default {
         count += Number(val.count)
       });
       return count
+    }
+  },
+  beforeMount() {
+    let localOrder = JSON.parse(localStorage.getItem('order'));
+    if (localOrder.food) {
+      this.selectFood = localOrder.food;
     }
   },
   mounted() {
@@ -87,7 +93,8 @@ export default {
     toPay() {
       let order = this.order;
       order.food = this.selectFood
-      this.$router.push({ path: '/pay', query: { 'order': JSON.stringify(order) } })
+      this.$router.push({ path: '/pay' })
+      localStorage.setItem('order', JSON.stringify(order))
     }
   }
 }
@@ -161,6 +168,10 @@ export default {
   bottom: 100%;
   left: 0;
   z-index: 1;
+  ul{
+    max-height: 240px;
+    overflow: scroll;
+  }
   .title,
   li {
     padding: 0 15px;

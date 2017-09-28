@@ -58,7 +58,7 @@
         </div>
       </div>
     </div>
-    <button class="pay">确认支付</button>
+    <button class="pay" @click="pay">确认支付</button>
   </div>
 </template>
 <script>
@@ -66,7 +66,7 @@ export default {
   name: 'Pay',
   data() {
     return {
-      order: JSON.parse(this.$route.query.order),
+      order: '',
       address: {},
       assets: '',
       checkVal: 1,
@@ -86,9 +86,18 @@ export default {
       return price
     }
   },
+  beforeMount() {
+    let localOrder = JSON.parse(localStorage.getItem('order'));
+    if (Object.keys(localOrder).length) {
+      this.order = localOrder;
+    }
+  },
   mounted() {
-    console.log(this.order)
-    this.getAddress()
+    if (this.order.address && Object.keys(this.order.address).length) {
+      this.address = this.order.address
+    } else {
+      this.getAddress()
+    }
     this.getAssets()
   },
   methods: {
@@ -124,6 +133,13 @@ export default {
     },
     check() {
       this.isClean = !this.isClean
+    },
+    pay() {
+      this.$toast('支付成功')
+      let timer = setTimeout(() => {
+        localStorage.removeItem('order')
+        this.$router.push({ path: '/pages' })
+      }, 500)
     }
   }
 }

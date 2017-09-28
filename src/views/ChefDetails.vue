@@ -45,13 +45,19 @@ export default {
     return {
       isCollected: false,
       chef: {},
-      order: JSON.parse(this.$route.query.order),
-      chefId: JSON.parse(this.$route.query.order).chef.id,
+      order: '',
+      chefId: '',
       selected: '1'
     }
   },
+  beforeMount() {
+    let localOrder = JSON.parse(localStorage.getItem('order'));
+    if (Object.keys(localOrder).length) {
+      this.order = localOrder;
+      this.chefId = localOrder.chef.id
+    }
+  },
   mounted() {
-    console.log(this.order)
     this.getChefInfo();
   },
   methods: {

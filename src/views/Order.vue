@@ -55,7 +55,7 @@ export default {
         state: 0
       }).then((res) => {
         console.log(res)
-        this.orderList = res.data.objects
+        this.orderList = res.data.objects.reverse()
       }).catch((err) => {
         console.log(err)
       })
