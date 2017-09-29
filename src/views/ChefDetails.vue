@@ -39,6 +39,7 @@ import Swipe from '../components/Swipe'
 import Goods from '../components/Goods'
 import Evaluation from '../components/Evaluation'
 import Cart from '../components/Cart'
+import {mapActions} from 'vuex'
 export default {
   name: 'ChefDetails',
   data() {

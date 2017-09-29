@@ -118,6 +118,7 @@ export default {
 <style lang="scss" scoped>
 .mint-popup {
   background: transparent;
+  z-index: 99;
 }
 
 .picker {

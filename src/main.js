@@ -9,6 +9,7 @@ import MintUI from 'mint-ui'
 import 'mint-ui/lib/style.css'
 import 'normalize.css'
 import filters from './filters'
+import store from './store/'
 
 Object.keys(filters).forEach(key => Vue.filter(key, filters[key]))
 
@@ -22,6 +23,7 @@ Vue.prototype.BUS = new Vue()
 //axios配置
 //配置请求拦截器
 axios.interceptors.request.use((config) => {
+  store.dispatch('showLoading')
   if (config.method === 'post') {
     config.data = qs.stringify(config.data);
   }
@@ -44,6 +46,7 @@ axios.interceptors.request.use((config) => {
 })
 //配置响应拦截器
 axios.interceptors.response.use((res) => {
+  store.dispatch('hideLoading')  
   if (res.data.statusCode != '00000') {
     alert('请求错误')
     return Promise.reject(res);
@@ -77,6 +80,7 @@ router.beforeEach((to, from, next) => {
 new Vue({
   el: '#app',
   router,
+  store,
   template: '<App/>',
   components: {
     App

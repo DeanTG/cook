@@ -85,10 +85,10 @@ export default {
   background: url('../../static/images/bg.png') no-repeat;
   background-size: 100% 100%;
   .logo {
-    padding-top: 100px;
+    padding-top: 70px;
     .logoPic {
-      width: 70px;
-      height: 70px;
+      width: 60px;
+      height: 60px;
       margin: 0 auto;
       border-radius: 5px;
       background: $red;
@@ -102,12 +102,12 @@ export default {
     }
   }
   .loginBox {
-    margin-top: 80px;
+    margin-top: 50px;
     .item {
       display: flex;
       align-items: center;
-      width: 70%;
-      margin: 0 auto 50px;
+      width: 80%;
+      margin: 0 auto 30px;
       color: rgba(255, 255, 255, 0.6);
       .left {
         flex: 0 0 60px;
@@ -137,14 +137,15 @@ export default {
           outline: none;
         }
         button {
-          flex: 0 0 60px;
+          flex: 0 0 50px;
           display: block;
-          width: 60px;
-          padding: 4px 8px;
+          width: 50px;
+          padding: 4px 0;
           margin-left: 5px;
           border: 1px solid rgba(255, 255, 255, 0.6);
           background: none;
           color: #fff;
+          font-size: 12px;
           text-align: center;
         }
         p {
@@ -159,10 +160,10 @@ export default {
   }
   .loginBtn {
     display: block;
-    width: 80%;
+    width: 85%;
     height: 46px;
     line-height: 46px;
-    margin: 100px auto 0;
+    margin: 70px auto 0;
     border-radius: 23px;
     background: $red;
     color: #fff;

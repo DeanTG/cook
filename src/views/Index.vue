@@ -6,8 +6,8 @@
     </mt-header>
     <Swipe></Swipe>
     <nav>
-      <router-link to="/private" class="item"></router-link>
-      <router-link to="/banquet" class="item"></router-link>
+      <router-link to="/private" class="item">厨师</router-link>
+      <router-link to="/banquet" class="item">饭店</router-link>
     </nav>
   </div>
 </template>
@@ -32,17 +32,23 @@ export default {
 nav {
   display: flex;
   width: 90%;
-  margin: 20px auto 0;
+  margin: 40px auto 0;
   justify-content: space-between;
   .item {
     display: inline-block;
     width: 47%;
-    height: 275px;
-    background: url(../../static/images/sirendingzhi.png) no-repeat;
+    height: 180px;
+    padding-top: 130px;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.1) url('https://gw.alicdn.com/tps/TB1FDOHLVXXXXcZXFXXXXXXXXXX-183-129.png?imgtag=avatar') center 20px no-repeat;
     background-size: contain;
     vertical-align: top;
+    color: $red;
+    font-size: 26px;
+    font-weight: bold;
+    text-align: center;
     &:last-child {
-      background: url(../../static/images/jiayouyanxi.png) no-repeat;
+      background: rgba(255,255,255,0.1) url('https://gw.alicdn.com/tps/TB1PlmNLVXXXXXEXFXXXXXXXXXX-183-129.png?imgtag=avatar') center 20px no-repeat;
       background-size: contain;
     }
   }

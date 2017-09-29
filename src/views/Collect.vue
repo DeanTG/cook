@@ -36,8 +36,7 @@ export default {
   justify-content: space-between;
   height: 100%;
   margin: 0 auto;
-  overflow: hidden;
-
+  // overflow: hidden;
 }
 .collect-siftBox{
   flex: 0 0 35px;

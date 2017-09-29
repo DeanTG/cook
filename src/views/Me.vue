@@ -118,9 +118,9 @@ header {
   }
   li {
     flex: 0 0 33.3%;
-    padding: 70px 0 15px;
+    padding: 60px 0 15px;
     border: $lightBlack solid 1px;
-    background: rgba(255, 255, 255, 0.05) url('../../static/images/address-icon.png') center 20px no-repeat;
+    background: rgba(255, 255, 255, 0.05) url('../../static/images/address-icon.png') center 15px no-repeat;
     background-size: 40px 40px;
     text-align: center;
     &:nth-of-type(2) {
@@ -143,10 +143,10 @@ header {
 
 .signOut {
   display: block;
-  width: 90%;
+  width: 80%;
   height: 46px;
   line-height: 46px;
-  margin: 80px auto 0;
+  margin: 50px auto 0;
   border-radius: 23px;
   background: $red;
   color: #fff;

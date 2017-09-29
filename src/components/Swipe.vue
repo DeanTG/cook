@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="swipe">
     <mt-swipe :class="rightPagination?'rightPagination':''" :auto="4000">
       <mt-swipe-item v-for="(item, index) in items" :key="item.id">
         <img :src="item" alt="">
@@ -16,9 +16,9 @@ export default {
       rightPagination: false
     }
   },
-  props:['chefId'],
+  props: ['chefId'],
   mounted() {
-    if (this.$route.path== '/pages/index') {
+    if (this.$route.path.indexOf('index') != -1) {
       this.fetchData()
     } else {
       this.fetchDetailsData()
@@ -32,8 +32,9 @@ export default {
         type: 0
       }).then((res) => {
         res.data.objects.forEach((value, index, array) => {
-          this.items.push(value.link)
+          // this.items.push(value.link)
         })
+        this.items=['https://gw.alicdn.com/imgextra/i1/156/TB2rswxgYsTMeJjy1zbXXchlVXa_!!156-0-luban.jpg_q50.jpg','https://gw.alicdn.com/imgextra/i2/125/TB2kD3HcPuhSKJjSspmXXcQDpXa_!!125-0-luban.jpg_q50.jpg','https://gw.alicdn.com/imgextra/i3/138/TB2JyZYgRUSMeJjy1zkXXaWmpXa_!!138-0-luban.jpg_q50.jpg']
       }).catch((err) => {
         console.log(err)
       });
@@ -74,8 +75,8 @@ export default {
 }
 
 </script>
-<style lang="scss" scoped>
-.mint-swipe {
+<style lang="scss">
+#swipe .mint-swipe {
   height: 180px;
   img {
     width: 100%;
@@ -83,13 +84,13 @@ export default {
   }
 }
 
-.rightPagination .mint-swipe-indicators {
+#swipe .rightPagination .mint-swipe-indicators {
   left: initial;
   right: 10px;
   transform: translateX(0)
 }
 
-.mint-swipe-indicator {
+#swipe .mint-swipe-indicator {
   border-radius: 0;
   background: #fff;
   transform: rotate(45deg);
