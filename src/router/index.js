@@ -47,6 +47,7 @@ export default new Router({
         {
           path: 'collect',
           meta: {
+            keepAlive: true,
             title: '收藏'
           },
           component: Collect
@@ -70,6 +71,7 @@ export default new Router({
     {
       path: '/private',
       meta: {
+        keepAlive: true,
         title: '私人订制'
       },
       component: Private

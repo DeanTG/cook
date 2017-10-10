@@ -11,6 +11,9 @@
 * 通过在main里添加Vue.prototype.BUS=new Vue()新建一个vue实例作为中央事件总线，来进行非父子组件之间的通信，后续改为vuex
 * 使用的localStorage进行多页面参数的状态保持，还没研究keep-alive机制
 * 调用的后端接口并没有token的鉴权，登录之后存一个本地数据模拟，在axios接口请求的时候增加拦截，router对象控制页面的跳转
+* 把点菜部分通过vuex进行状态管理，action提交mutation驱动state改变，action操作的行为可异步，mutation操作数据不可异步，mapActions,mapMutations只能有一个载荷的参数
+* action 和mutation 都可以驱动数据改变，通过action->mutation->state只是一种规范行为，vuex相关[issue](https://github.com/vuejs/vuex/issues/587)讨论
+* [keep-alive](http://www.jianshu.com/p/0b0222954483)
 
 
 

@@ -11,13 +11,14 @@
         <div class="foodInfo">
           <p>{{foodItem.name}}</p>
           <p>¥{{foodItem.price}}</p>
-          <button class="add" @click="addFood(foodItem)"></button>
+          <button class="add" @click="increase([foodItem])"></button>
         </div>
       </li>
     </ul>
   </div>
 </template>
 <script>
+import { mapActions} from 'vuex'
 export default {
   name: 'Goods',
   data() {
@@ -41,6 +42,7 @@ export default {
     this.getMenu()
   },
   methods: {
+    ...mapActions(['increase']),
     getMenu() {
       this.$http.post('', {
         requestCode: '20000',
@@ -74,26 +76,6 @@ export default {
       }).catch((err) => {
         console.log(err)
       })
-    },
-    addFood(food) {
-      let index = -1;
-      for (let i = 0; i < this.selectFood.length; i++) {
-        if (this.selectFood[i].id == food.id) {
-          index = i;
-        }
-      }
-      if (index != -1) {
-        this.selectFood[index].count += 1;
-      } else {
-        this.selectFood.push({
-          id: food.id,
-          name: food.name,
-          price: food.price,
-          count: 1
-        })
-      }
-
-      this.BUS.$emit('selectFood', this.selectFood)
     }
   }
 }

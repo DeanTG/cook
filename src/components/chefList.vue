@@ -95,6 +95,7 @@ export default {
           time: this.dinnerTime
         };
         this.$router.push({ path: '/chefDetails' })
+        this.$store.dispatch('clearSelect')
         localStorage.setItem('order', JSON.stringify(order))
       } else {
         this.$toast('请先选择用餐时间')

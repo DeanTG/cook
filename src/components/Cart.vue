@@ -22,7 +22,7 @@
           <div class="oprateCartFood">
             <span class="decrease" @click="decrease(index)"></span>
             <span>{{item.count}}</span>
-            <span class="increase" @click="increase(index)"></span>
+            <span class="increase" @click="increase(['',index])"></span>
           </div>
         </li>
       </ul>
@@ -30,16 +30,17 @@
   </div>
 </template>
 <script>
+import { mapGetters, mapActions } from 'vuex'
 export default {
   name: 'Cart',
   data() {
     return {
-      selectFood: [],
       showCartFood: false,
     }
   },
   props: ['order'],
   computed: {
+    ...mapGetters(['selectFood']),
     totalPrice() {
       let price = 0;
       this.selectFood.forEach((val, index, arr) => {
@@ -55,33 +56,21 @@ export default {
       return count
     }
   },
-  beforeMount() {
-    let localOrder = JSON.parse(localStorage.getItem('order'));
-    if (localOrder.food) {
-      this.selectFood = localOrder.food;
+  watch: {
+    selectFood() {
+      if (!this.selectFood.length) {
+        this.showCartFood = false
+      }
     }
   },
   mounted() {
-    this.BUS.$on('selectFood', (res) => {
-      console.log(res)
-      this.selectFood = res
-    })
+    console.log(this.selectFood)
   },
   methods: {
-    decrease(index) {
-      this.selectFood[index].count -= 1;
-      if (this.selectFood[index].count == 0) {
-        this.selectFood.splice(index, 1)
-        if (!this.selectFood.length) this.showCartFood = false;
-      }
-    },
-    increase(index) {
-      this.selectFood[index].count += 1;
-    },
+    ...mapActions(['increase', 'decrease']),
     clear() {
       this.$messagebox.confirm('确认清空购物车？', '').then(() => {
-        this.selectFood = [];
-        this.showCartFood = false
+        this.$store.dispatch('decrease', -1)
       }, () => {
       })
     },
@@ -168,7 +157,7 @@ export default {
   bottom: 100%;
   left: 0;
   z-index: 1;
-  ul{
+  ul {
     max-height: 240px;
     overflow: scroll;
   }
