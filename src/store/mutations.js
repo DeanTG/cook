@@ -1,4 +1,5 @@
 import {
+  SET_TOKEN,
   SHOW_LOADING,
   HIDE_LOADING,
   INCREASE_FOOD,
@@ -7,6 +8,9 @@ import {
 } from './type'
 
 export default {
+  [SET_TOKEN](state,token){
+    state.token = token
+  },
   [SHOW_LOADING](state) {
     state.loadingState = true
   },

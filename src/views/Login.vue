@@ -28,61 +28,65 @@
   </div>
 </template>
 <script>
+import { mapActions } from "vuex";
 export default {
-  name: 'Login',
+  name: "Login",
   data() {
     return {
-      account: '13333333333', //15950455203
-      userAccount: '',
-      code: '1234',
-      userCode: '',
+      account: "13333333333", //15950455203
+      userAccount: "",
+      code: "1234",
+      userCode: "",
       showAccountErr: false,
       showCodeErr: false,
-      countTime: 60,
-    }
+      countTime: 60
+    };
   },
   methods: {
+    ...mapActions(['setToken']),
     checkAccount() {
       if (this.account == this.userAccount) {
-        this.showAccountErr = false
+        this.showAccountErr = false;
       } else {
-        this.showAccountErr = true
+        this.showAccountErr = true;
       }
     },
     checkCode() {
       if (this.code == this.userCode) {
-        this.showCodeErr = false
+        this.showCodeErr = false;
       } else {
-        this.showCodeErr = true
+        this.showCodeErr = true;
       }
     },
     sendCode() {
-      if (this.countTime != 60) return
+      if (this.countTime != 60) return;
       let timer = setInterval(() => {
         if (this.countTime == 0) {
-          this.countTime = 60
-          clearInterval(timer)
+          this.countTime = 60;
+          clearInterval(timer);
         } else {
           this.countTime -= 1;
         }
-      }, 1000)
+      }, 1000);
     },
     login() {
-      if (this.userAccount != this.account || this.userCode != this.code) return
-      this.$toast('登录成功')
+      console.log(this.setToken(123))
+      if (this.userAccount != this.account || this.userCode != this.code)
+        return;
+      this.$toast("登录成功");
       let timer = setTimeout(() => {
-        localStorage.setItem('userId','151')
-        this.$router.push({ path: '/pages' })
-      }, 500)
+        localStorage.setItem("userId", "151");
+        this.$router.push({ path: "/pages" });
+      }, 500);
     }
   }
-}
+};
 </script>
 <style lang="scss" scoped>
 #login {
   width: 100%;
   height: 100%;
-  background: url('../../static/images/bg.png') no-repeat;
+  background: url("../../static/images/bg.png") no-repeat;
   background-size: 100% 100%;
   .logo {
     padding-top: 70px;

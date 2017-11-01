@@ -1,6 +1,9 @@
 import * as types from './type'
 
 export default {
+  setToken({commit},token){
+    commit(types.SET_TOKEN,token)
+  },
   showLoading({commit}){
      commit(types.SHOW_LOADING)
   },

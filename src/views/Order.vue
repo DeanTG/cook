@@ -34,43 +34,56 @@
 </template>
 <script>
 export default {
-  name: 'Order',
+  name: "Order",
   data() {
     return {
       orderList: [],
-      payState: { '-1': '取消订单', '0': '待支付', '1': '支付中', '2': '已支付', '3': '厨师接单', '4': '交易完成', '5': '订单完成', '6': '退款中', '7': '退款成功', '8': '退款失败' }
-    }
+      payState: {
+        "-1": "取消订单",
+        "0": "待支付",
+        "1": "支付中",
+        "2": "已支付",
+        "3": "厨师接单",
+        "4": "交易完成",
+        "5": "订单完成",
+        "6": "退款中",
+        "7": "退款成功",
+        "8": "退款失败"
+      }
+    };
   },
   mounted() {
-    this.fetchData()
+    this.fetchData();
   },
   methods: {
     fetchData() {
-      this.$http.post('', {
-        requestCode: "50001",
-        member_id: '151',
-        res_type: 0,
-        'page.currentPage': 1,
-        'page.showCount': 100,
-        state: 0
-      }).then((res) => {
-        console.log(res)
-        this.orderList = res.data.objects.reverse()
-      }).catch((err) => {
-        console.log(err)
-      })
+      this.$http
+        .post("", {
+          requestCode: "50001",
+          member_id: "151",
+          res_type: 0,
+          "page.currentPage": 1,
+          "page.showCount": 100,
+          state: 0
+        })
+        .then(res => {
+          console.log(res);
+          this.orderList = res.data.objects ? res.data.objects.reverse() : [];
+        })
+        .catch(err => {
+          console.log(err);
+        });
     },
-    pushEvaluation(){
-      this.$router.push({path:'/pushEvaluation'})
+    pushEvaluation() {
+      this.$router.push({ path: "/pushEvaluation" });
     },
-    cancelOrder(){
-      this.$messagebox.confirm('用餐3小时内退款比例40.0%<br>用餐3小时外退款比例100.0%','退单须知').then(()=>{
-      },()=>{
-      })
+    cancelOrder() {
+      this.$messagebox
+        .confirm("用餐3小时内退款比例40.0%<br>用餐3小时外退款比例100.0%", "退单须知")
+        .then(() => {}, () => {});
     }
   }
-}
-
+};
 </script>
 <style lang="scss" scoped>
 #order {
@@ -92,7 +105,7 @@ export default {
     section,
     footer {
       padding: 0 10px;
-      border-bottom: 2px solid rgba(255, 255, 255, 0.14)
+      border-bottom: 2px solid rgba(255, 255, 255, 0.14);
     }
     header,
     footer {
@@ -109,7 +122,7 @@ export default {
       display: inline-block;
       width: 14px;
       height: 14px;
-      background: url('../../static/images/tiaozhuan.png') no-repeat;
+      background: url("../../static/images/tiaozhuan.png") no-repeat;
       background-size: contain;
       vertical-align: middle;
     }
@@ -137,8 +150,8 @@ export default {
         color: #fff;
         font-size: 14px;
         text-align: center;
-        &.blue{
-          background: #02C5CD;
+        &.blue {
+          background: #02c5cd;
         }
       }
     }

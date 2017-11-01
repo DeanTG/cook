@@ -18,7 +18,7 @@ import Comment from '../views/Comment.vue'
 
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   routes: [{
       path: '/',
       redirect: '/pages/'
@@ -138,3 +138,14 @@ export default new Router({
     }
   ]
 })
+
+// 路由配置
+router.beforeEach((to, from, next) => {
+  /* 路由发生变化修改页面title */
+  if (to.meta.title) {
+    document.title = to.meta.title;
+  }
+  next();
+})
+
+export default router
